@@ -20,7 +20,7 @@
             margin: 0;
         }
         </style>
-        <title></title>
+        <title>Gamlestaden orientering</title>
     </head>
     <body>
         <div id="map">
@@ -37,10 +37,27 @@
         <script src="js/labelgun.min.js"></script>
         <script src="js/labels.js"></script>
         <script src="js/leaflet-measure.js"></script>
+        <script src="data/Fornamarkomrden_6.js"></script>
         <script>
+        var highlightLayer;
+        function highlightFeature(e) {
+            highlightLayer = e.target;
+
+            if (e.target.feature.geometry.type === 'LineString' || e.target.feature.geometry.type === 'MultiLineString') {
+              highlightLayer.setStyle({
+                color: '#ffff00',
+              });
+            } else {
+              highlightLayer.setStyle({
+                fillColor: '#ffff00',
+                fillOpacity: 1
+              });
+            }
+            highlightLayer.openPopup();
+        }
         var map = L.map('map', {
             zoomControl:false, maxZoom:28, minZoom:1
-        }).fitBounds([[57.72436585181553,11.998270761805115],[57.73094221037563,12.017651686879262]]);
+        }).fitBounds([[57.724809711441104,12.000703521413877],[57.73018070125014,12.014462579772927]]);
         var hash = new L.Hash(map);
         map.attributionControl.setPrefix('<a href="https://github.com/tomchadwin/qgis2web" target="_blank">qgis2web</a> &middot; <a href="https://leafletjs.com" title="A JS library for interactive maps">Leaflet</a> &middot; <a href="https://qgis.org">QGIS</a>');
         var autolinker = new Autolinker({truncate: {length: 30, location: 'smart'}});
@@ -72,6 +89,37 @@
 				popup._contentNode.classList.remove('media');
 			}
 		}
+        var title = new L.Control({'position':'topleft'});
+        title.onAdd = function (map) {
+            this._div = L.DomUtil.create('div', 'info');
+            this.update();
+            return this._div;
+        };
+        title.update = function () {
+            this._div.innerHTML = '<h2>Gamlestaden orientering</h2>';
+        };
+        title.addTo(map);
+        var abstract = new L.Control({'position':'bottomright'});
+        abstract.onAdd = function (map) {
+            this._div = L.DomUtil.create('div',
+            'leaflet-control abstract');
+            this._div.id = 'abstract'
+                this._div.setAttribute("onmouseenter", "abstract.show()");
+                this._div.setAttribute("onmouseleave", "abstract.hide()");
+                this.hide();
+                return this._div;
+            };
+            abstract.hide = function () {
+                this._div.classList.remove("abstractUncollapsed");
+                this._div.classList.add("abstract");
+                this._div.innerHTML = 'i'
+            }
+            abstract.show = function () {
+                this._div.classList.remove("abstract");
+                this._div.classList.add("abstractUncollapsed");
+                this._div.innerHTML = 'Gamlestadstorget tillhör Göteborgs äldsta historia. Det var var troligen hjärtat i den gamla medeltidsstaden Nya Lödöse där det låg norr om kyrkan. Markerna som sedan bredde ut sig över den fallna staden gav utrymme för gods landerier och fabriker och torget återuppstod 1893 i ny utformning. Men 1975 utplånades alla spår av det förflutna med en ny trafikmaskin. ';
+        };
+        abstract.addTo(map);
         var zoomControl = L.control.zoom({
             position: 'topleft'
         }).addTo(map);
@@ -100,18 +148,185 @@
         });
         layer_GoogleMaps_0;
         map.addLayer(layer_GoogleMaps_0);
-        map.createPane('pane_Flygfoto2025_modifierad_1');
-        map.getPane('pane_Flygfoto2025_modifierad_1').style.zIndex = 401;
-        var img_Flygfoto2025_modifierad_1 = 'data/Flygfoto2025_modifierad_1.png';
-        var img_bounds_Flygfoto2025_modifierad_1 = [[57.72460710254449,12.001463166798558],[57.73051031350748,12.013635618851467]];
-        var layer_Flygfoto2025_modifierad_1 = new L.imageOverlay(img_Flygfoto2025_modifierad_1,
-                                              img_bounds_Flygfoto2025_modifierad_1,
-                                              {pane: 'pane_Flygfoto2025_modifierad_1'});
-        bounds_group.addLayer(layer_Flygfoto2025_modifierad_1);
-        map.addLayer(layer_Flygfoto2025_modifierad_1);
+        map.createPane('pane_NyaLdse14731624illustration_1');
+        map.getPane('pane_NyaLdse14731624illustration_1').style.zIndex = 401;
+        var img_NyaLdse14731624illustration_1 = 'data/NyaLdse14731624illustration_1.png';
+        var img_bounds_NyaLdse14731624illustration_1 = [[57.72527397958601,12.000037084387268],[57.73025480496318,12.014369974712102]];
+        var layer_NyaLdse14731624illustration_1 = new L.imageOverlay(img_NyaLdse14731624illustration_1,
+                                              img_bounds_NyaLdse14731624illustration_1,
+                                              {pane: 'pane_NyaLdse14731624illustration_1'});
+        bounds_group.addLayer(layer_NyaLdse14731624illustration_1);
+        map.addLayer(layer_NyaLdse14731624illustration_1);
+        map.createPane('pane_Stadenskartverk1923_2');
+        map.getPane('pane_Stadenskartverk1923_2').style.zIndex = 402;
+        var img_Stadenskartverk1923_2 = 'data/Stadenskartverk1923_2.png';
+        var img_bounds_Stadenskartverk1923_2 = [[57.722239352665355,11.9957550333837],[57.732656691998045,12.019700257440046]];
+        var layer_Stadenskartverk1923_2 = new L.imageOverlay(img_Stadenskartverk1923_2,
+                                              img_bounds_Stadenskartverk1923_2,
+                                              {pane: 'pane_Stadenskartverk1923_2'});
+        bounds_group.addLayer(layer_Stadenskartverk1923_2);
+        map.addLayer(layer_Stadenskartverk1923_2);
+        map.createPane('pane_Flygfoto1960_3');
+        map.getPane('pane_Flygfoto1960_3').style.zIndex = 403;
+        var img_Flygfoto1960_3 = 'data/Flygfoto1960_3.png';
+        var img_bounds_Flygfoto1960_3 = [[57.72461658024378,12.001436037586918],[57.73048155760888,12.013586177287724]];
+        var layer_Flygfoto1960_3 = new L.imageOverlay(img_Flygfoto1960_3,
+                                              img_bounds_Flygfoto1960_3,
+                                              {pane: 'pane_Flygfoto1960_3'});
+        bounds_group.addLayer(layer_Flygfoto1960_3);
+        map.addLayer(layer_Flygfoto1960_3);
+        map.createPane('pane_Flygfoto1975_4');
+        map.getPane('pane_Flygfoto1975_4').style.zIndex = 404;
+        var img_Flygfoto1975_4 = 'data/Flygfoto1975_4.png';
+        var img_bounds_Flygfoto1975_4 = [[57.72455218845805,12.001366292524674],[57.730486098053824,12.01366501968518]];
+        var layer_Flygfoto1975_4 = new L.imageOverlay(img_Flygfoto1975_4,
+                                              img_bounds_Flygfoto1975_4,
+                                              {pane: 'pane_Flygfoto1975_4'});
+        bounds_group.addLayer(layer_Flygfoto1975_4);
+        map.addLayer(layer_Flygfoto1975_4);
+        map.createPane('pane_Flygfoto2025_5');
+        map.getPane('pane_Flygfoto2025_5').style.zIndex = 405;
+        var img_Flygfoto2025_5 = 'data/Flygfoto2025_5.png';
+        var img_bounds_Flygfoto2025_5 = [[57.72460710254449,12.001463166798558],[57.73051031350748,12.013635618851467]];
+        var layer_Flygfoto2025_5 = new L.imageOverlay(img_Flygfoto2025_5,
+                                              img_bounds_Flygfoto2025_5,
+                                              {pane: 'pane_Flygfoto2025_5'});
+        bounds_group.addLayer(layer_Flygfoto2025_5);
+        map.addLayer(layer_Flygfoto2025_5);
+        function pop_Fornamarkomrden_6(feature, layer) {
+            layer.on({
+                mouseout: function(e) {
+                    for (var i in e.target._eventParents) {
+                        if (typeof e.target._eventParents[i].resetStyle === 'function') {
+                            e.target._eventParents[i].resetStyle(e.target);
+                        }
+                    }
+                    if (typeof layer.closePopup == 'function') {
+                        layer.closePopup();
+                    } else {
+                        layer.eachLayer(function(feature){
+                            feature.closePopup()
+                        });
+                    }
+                },
+                mouseover: highlightFeature,
+            });
+            var popupContent = '<table>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['id'] !== null ? autolinker.link(String(feature.properties['id']).replace(/'/g, '\'').toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Namn</th>\
+                        <td>' + (feature.properties['Namn'] !== null ? autolinker.link(String(feature.properties['Namn']).replace(/'/g, '\'').toLocaleString()) : '') + '</td>\
+                    </tr>\
+                </table>';
+            var content = removeEmptyRowsFromPopupContent(popupContent, feature);
+			layer.on('popupopen', function(e) {
+				addClassToPopupIfMedia(content, e.popup);
+			});
+			layer.bindPopup(content, { maxHeight: 400 });
+        }
+
+        function style_Fornamarkomrden_6_0(feature) {
+            switch(String(feature.properties['Namn'])) {
+                case 'Torgyta':
+                    return {
+                pane: 'pane_Fornamarkomrden_6',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(241,223,24,0.6980392156862745)',
+                interactive: false,
+            }
+                    break;
+                case 'Kyrko ruin':
+                    return {
+                pane: 'pane_Fornamarkomrden_6',
+                opacity: 1,
+                color: 'rgba(255,255,255,1.0)',
+                dashArray: '10.0,2.0',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 2.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(234,39,224,0.6980392156862745)',
+                interactive: false,
+            }
+                    break;
+                case 'Marieholms landeri':
+                    return {
+                pane: 'pane_Fornamarkomrden_6',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(175,230,23,0.6980392156862745)',
+                interactive: false,
+            }
+                    break;
+                case 'Christinedal':
+                    return {
+                pane: 'pane_Fornamarkomrden_6',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(41,206,52,0.6980392156862745)',
+                interactive: false,
+            }
+                    break;
+                case 'Sahlgrenska Sockerbruk':
+                    return {
+                pane: 'pane_Fornamarkomrden_6',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(69,217,180,0.6980392156862745)',
+                interactive: false,
+            }
+                    break;
+            }
+        }
+        map.createPane('pane_Fornamarkomrden_6');
+        map.getPane('pane_Fornamarkomrden_6').style.zIndex = 406;
+        map.getPane('pane_Fornamarkomrden_6').style['mix-blend-mode'] = 'normal';
+        var layer_Fornamarkomrden_6 = new L.geoJson(json_Fornamarkomrden_6, {
+            attribution: '',
+            interactive: false,
+            dataVar: 'json_Fornamarkomrden_6',
+            layerName: 'layer_Fornamarkomrden_6',
+            pane: 'pane_Fornamarkomrden_6',
+            onEachFeature: pop_Fornamarkomrden_6,
+            style: style_Fornamarkomrden_6_0,
+        });
+        bounds_group.addLayer(layer_Fornamarkomrden_6);
         var overlaysTree = [
-            {label: "Flygfoto 2025_modifierad", layer: layer_Flygfoto2025_modifierad_1},
-            {label: "Google Maps", layer: layer_GoogleMaps_0},]
+            {label: 'Forna markområden<br /><table><tr><td style="text-align: center;"><img src="legend/Fornamarkomrden_6_Torgyta0.png" /></td><td>Torgyta</td></tr><tr><td style="text-align: center;"><img src="legend/Fornamarkomrden_6_Kyrkoruin1.png" /></td><td>Kyrko ruin</td></tr><tr><td style="text-align: center;"><img src="legend/Fornamarkomrden_6_Marieholmslanderi2.png" /></td><td>Marieholms landeri</td></tr><tr><td style="text-align: center;"><img src="legend/Fornamarkomrden_6_Christinedal3.png" /></td><td>Christinedal</td></tr><tr><td style="text-align: center;"><img src="legend/Fornamarkomrden_6_SahlgrenskaSockerbruk4.png" /></td><td>Sahlgrenska Sockerbruk</td></tr></table>', layer: layer_Fornamarkomrden_6},
+            {label: "Flygfoto 2025", layer: layer_Flygfoto2025_5},
+            {label: "Flygfoto 1975", layer: layer_Flygfoto1975_4},
+            {label: "Flygfoto 1960", layer: layer_Flygfoto1960_3},
+            {label: "Stadens kartverk 1923", layer: layer_Stadenskartverk1923_2},
+            {label: "Nya Lödöse 1473-1624 illustration", layer: layer_NyaLdse14731624illustration_1},
+            {label: "Google Maps", layer: layer_GoogleMaps_0, radioGroup: 'bm' },]
         var lay = L.control.layers.tree(null, overlaysTree,{
             //namedToggle: true,
             //selectorBack: false,
@@ -119,64 +334,37 @@
             //openedSymbol: '&#8863; &#x1f5c1;',
             //collapseAll: 'Collapse all',
             //expandAll: 'Expand all',
-            collapsed: false, 
+            collapsed: true,
         });
         lay.addTo(map);
-		document.addEventListener("DOMContentLoaded", function() {
-            // set new Layers List height which considers toggle icon
-            function newLayersListHeight() {
-                var layerScrollbarElement = document.querySelector('.leaflet-control-layers-scrollbar');
-                if (layerScrollbarElement) {
-                    var layersListElement = document.querySelector('.leaflet-control-layers-list');
-                    var originalHeight = layersListElement.style.height 
-                        || window.getComputedStyle(layersListElement).height;
-                    var newHeight = parseFloat(originalHeight) - 50;
-                    layersListElement.style.height = newHeight + 'px';
-                }
-            }
-            var isLayersListExpanded = true;
-            var controlLayersElement = document.querySelector('.leaflet-control-layers');
-            var toggleLayerControl = document.querySelector('.leaflet-control-layers-toggle');
-            // toggle Collapsed/Expanded and apply new Layers List height
-            toggleLayerControl.addEventListener('click', function() {
-                if (isLayersListExpanded) {
-                    controlLayersElement.classList.remove('leaflet-control-layers-expanded');
-                } else {
-                    controlLayersElement.classList.add('leaflet-control-layers-expanded');
-                }
-                isLayersListExpanded = !isLayersListExpanded;
-                newLayersListHeight()
-            });	
-			// apply new Layers List height if toggle layerstree
-			if (controlLayersElement) {
-				controlLayersElement.addEventListener('click', function(event) {
-					var toggleLayerHeaderPointer = event.target.closest('.leaflet-layerstree-header-pointer span');
-					if (toggleLayerHeaderPointer) {
-						newLayersListHeight();
-					}
-				});
-			}
-            // Collapsed/Expanded at Start to apply new height
-            setTimeout(function() {
-                toggleLayerControl.click();
-            }, 10);
-            setTimeout(function() {
-                toggleLayerControl.click();
-            }, 10);
-            // Collapsed touch/small screen
-            var isSmallScreen = window.innerWidth < 650;
-            if (isSmallScreen) {
-                setTimeout(function() {
-                    controlLayersElement.classList.remove('leaflet-control-layers-expanded');
-                    isLayersListExpanded = !isLayersListExpanded;
-                }, 500);
-            }  
-        });       
         setBounds();
+        var i = 0;
+        layer_Fornamarkomrden_6.eachLayer(function(layer) {
+            var context = {
+                feature: layer.feature,
+                variables: {}
+            };
+            layer.bindTooltip((layer.feature.properties['Namn'] !== null?String('<div style="color: #ffffff; font-size: 13pt; font-family: \'High Tower Text\', sans-serif;">' + layer.feature.properties['Namn']) + '</div>':''), {permanent: true, offset: [-0, -16], className: 'css_Fornamarkomrden_6'});
+            labels.push(layer);
+            totalMarkers += 1;
+              layer.added = true;
+              addLabel(layer, i);
+              i++;
+        });
         L.ImageOverlay.include({
             getBounds: function () {
                 return this._bounds;
             }
+        });
+        resetLabels([layer_Fornamarkomrden_6]);
+        map.on("zoomend", function(){
+            resetLabels([layer_Fornamarkomrden_6]);
+        });
+        map.on("layeradd", function(){
+            resetLabels([layer_Fornamarkomrden_6]);
+        });
+        map.on("layerremove", function(){
+            resetLabels([layer_Fornamarkomrden_6]);
         });
         </script>
     </body>
